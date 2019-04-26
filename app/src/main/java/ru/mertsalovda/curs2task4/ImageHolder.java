@@ -6,11 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class ImageHolder extends RecyclerView.ViewHolder {
-    ImageView imageView;
+
+    private ImageView imageView;
 
     public ImageHolder(@NonNull View itemView) {
         super(itemView);
-        imageView = itemView.findViewById(R.id.card_image);
+        imageView = itemView.findViewById(R.id.iv_image);
     }
 
     public ImageView getImageView() {
@@ -19,5 +20,20 @@ public class ImageHolder extends RecyclerView.ViewHolder {
 
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
+    }
+
+    public void bind (ImageCard imageCard){
+        if (imageCard != null) {
+            imageView.setImageResource(imageCard.getImage());
+        }
+    }
+
+    public void setListener(final ComplexRecyclerViewAdapter.OnItemClickListener listener){
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick();
+            }
+        });
     }
 }

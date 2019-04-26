@@ -30,4 +30,20 @@ public class TextHolder extends RecyclerView.ViewHolder {
     public void setNumberText(TextView numberText) {
         this.numberText = numberText;
     }
+
+    public void bind(TextCard textCard){
+        if (textCard != null) {
+            nameText.setText(textCard.getName());
+            numberText.setText(textCard.getNumber());
+        }
+    }
+
+    public void setListener(final ComplexRecyclerViewAdapter.OnItemClickListener listener){
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick();
+            }
+        });
+    }
 }
