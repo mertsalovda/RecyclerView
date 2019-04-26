@@ -60,11 +60,13 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             case TEXT_CARD_TYPE:
                 TextHolder textHolder = (TextHolder)viewHolder;
                 textHolder.bind((TextCard) itemList.get(position));
+                //Listener -> Holder
                 textHolder.setListener(listener);
                 break;
             case IMAGE_CARD_TYPE:
                 ImageHolder imageHolder = (ImageHolder)viewHolder;
                 imageHolder.bind((ImageCard) itemList.get(position));
+                //Listener -> Holder
                 imageHolder.setListener(listener);
                 break;
             default:
@@ -96,6 +98,10 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public void addData(Object items) {
         itemList.add(items);
-        notifyDataSetChanged();
+        notifyItemInserted(itemList.size());
+    }
+
+    public void delete(){
+        
     }
 }

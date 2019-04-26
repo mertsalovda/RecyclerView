@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +39,7 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     private ComplexRecyclerViewAdapter.OnItemClickListener mListener;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -71,21 +73,26 @@ public class RecyclerViewFragment extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
+        //Listener -> Adapter
         mAdapter.setListener(mListener);
-        mAdapter.addData(testDataObjects());
 
+        mAdapter.addData(testDataObjects());
     }
 
     private List<Object> testDataObjects() {
         List<Object> list = new ArrayList<>();
 
-        list.add(new TextCard("Text: ", "3165431"));
+        list.add(new TextCard(UUID.randomUUID().toString().substring(0,10),
+                UUID.randomUUID().toString().substring(0,10)));
         list.add(new ImageCard());
         list.add(new ImageCard());
-        list.add(new TextCard("Text: ", "5422450254"));
+        list.add(new TextCard(UUID.randomUUID().toString().substring(0,10),
+                UUID.randomUUID().toString().substring(0,10)));
         list.add(new ImageCard());
-        list.add(new TextCard("Text: ", "79343456"));
-        list.add(new TextCard("Text: ", "4567878"));
+        list.add(new TextCard(UUID.randomUUID().toString().substring(0,10),
+                UUID.randomUUID().toString().substring(0,10)));
+        list.add(new TextCard(UUID.randomUUID().toString().substring(0,10),
+                UUID.randomUUID().toString().substring(0,10)));
         list.add(new ImageCard());
 
         return list;
@@ -111,7 +118,8 @@ public class RecyclerViewFragment extends Fragment {
                 Toast.makeText(getContext(), "ADD IMAGE", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.mi_add_text:
-                mAdapter.addData(new TextCard("text","654321354641"));
+                mAdapter.addData(new TextCard(UUID.randomUUID().toString().substring(0,10),
+                        UUID.randomUUID().toString().substring(0,10)));
                 Toast.makeText(getContext(), "ADD TEXT", Toast.LENGTH_SHORT).show();
                 return true;
             default:
