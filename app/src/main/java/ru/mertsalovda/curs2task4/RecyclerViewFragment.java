@@ -6,15 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,8 +72,7 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter);
         //Listener -> Adapter
         mAdapter.setListener(mListener);
@@ -121,14 +119,12 @@ public class RecyclerViewFragment extends Fragment {
                 mAdapter.addData(new ImageCard());
                 //Фокус на добавленный элемент
                 recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
-                Toast.makeText(getContext(), "ADD IMAGE", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.mi_add_text:
                 mAdapter.addData(new TextCard(UUID.randomUUID().toString().substring(0, 10),
                         UUID.randomUUID().toString().substring(0, 10)));
                 //Фокус на добавленный элемент
                 recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
-                Toast.makeText(getContext(), "ADD TEXT", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
