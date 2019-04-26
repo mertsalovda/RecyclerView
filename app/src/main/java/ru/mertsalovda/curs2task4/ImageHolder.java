@@ -14,14 +14,6 @@ public class ImageHolder extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.iv_image);
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
-
     public void bind (ImageCard imageCard){
         if (imageCard != null) {
             imageView.setImageResource(imageCard.getImage());
@@ -32,7 +24,7 @@ public class ImageHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick();
+                listener.onItemClick(getAdapterPosition());
             }
         });
     }

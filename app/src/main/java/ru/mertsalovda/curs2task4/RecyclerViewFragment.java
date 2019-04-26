@@ -3,7 +3,6 @@ package ru.mertsalovda.curs2task4;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,7 +25,7 @@ import java.util.UUID;
  */
 public class RecyclerViewFragment extends Fragment {
 
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     private final ComplexRecyclerViewAdapter mAdapter = new ComplexRecyclerViewAdapter();
 
@@ -43,15 +42,19 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ComplexRecyclerViewAdapter.OnItemClickListener){
-            mListener = (ComplexRecyclerViewAdapter.OnItemClickListener)context;
-        }
+        mListener = new ComplexRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                mAdapter.delete(position);
+            }
+        };
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        //Сохранить Fragment при смене конфигурации
         setRetainInstance(true);
     }
 
@@ -75,24 +78,25 @@ public class RecyclerViewFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         //Listener -> Adapter
         mAdapter.setListener(mListener);
-
-        mAdapter.addData(testDataObjects());
+        if (savedInstanceState == null) {
+            mAdapter.addData(initData());
+        }
     }
-
-    private List<Object> testDataObjects() {
+    //Начальные данные
+    private List<Object> initData() {
         List<Object> list = new ArrayList<>();
 
-        list.add(new TextCard(UUID.randomUUID().toString().substring(0,10),
-                UUID.randomUUID().toString().substring(0,10)));
+        list.add(new TextCard(UUID.randomUUID().toString().substring(0, 10),
+                UUID.randomUUID().toString().substring(0, 10)));
         list.add(new ImageCard());
         list.add(new ImageCard());
-        list.add(new TextCard(UUID.randomUUID().toString().substring(0,10),
-                UUID.randomUUID().toString().substring(0,10)));
+        list.add(new TextCard(UUID.randomUUID().toString().substring(0, 10),
+                UUID.randomUUID().toString().substring(0, 10)));
         list.add(new ImageCard());
-        list.add(new TextCard(UUID.randomUUID().toString().substring(0,10),
-                UUID.randomUUID().toString().substring(0,10)));
-        list.add(new TextCard(UUID.randomUUID().toString().substring(0,10),
-                UUID.randomUUID().toString().substring(0,10)));
+        list.add(new TextCard(UUID.randomUUID().toString().substring(0, 10),
+                UUID.randomUUID().toString().substring(0, 10)));
+        list.add(new TextCard(UUID.randomUUID().toString().substring(0, 10),
+                UUID.randomUUID().toString().substring(0, 10)));
         list.add(new ImageCard());
 
         return list;
@@ -115,15 +119,20 @@ public class RecyclerViewFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.mi_add_image:
                 mAdapter.addData(new ImageCard());
+                //Фокус на добавленный элемент
+                recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
                 Toast.makeText(getContext(), "ADD IMAGE", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.mi_add_text:
-                mAdapter.addData(new TextCard(UUID.randomUUID().toString().substring(0,10),
-                        UUID.randomUUID().toString().substring(0,10)));
+                mAdapter.addData(new TextCard(UUID.randomUUID().toString().substring(0, 10),
+                        UUID.randomUUID().toString().substring(0, 10)));
+                //Фокус на добавленный элемент
+                recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
                 Toast.makeText(getContext(), "ADD TEXT", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

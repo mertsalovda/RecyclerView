@@ -15,22 +15,6 @@ public class TextHolder extends RecyclerView.ViewHolder {
         numberText = itemView.findViewById(R.id.tv_number);
     }
 
-    public TextView getNameText() {
-        return nameText;
-    }
-
-    public void setNameText(TextView nameText) {
-        this.nameText = nameText;
-    }
-
-    public TextView getNumberText() {
-        return numberText;
-    }
-
-    public void setNumberText(TextView numberText) {
-        this.numberText = numberText;
-    }
-
     public void bind(TextCard textCard){
         if (textCard != null) {
             nameText.setText(textCard.getName());
@@ -42,7 +26,7 @@ public class TextHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick();
+                listener.onItemClick(getAdapterPosition());
             }
         });
     }

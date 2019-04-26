@@ -22,12 +22,8 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         this.listener = listener;
     }
 
-    public OnItemClickListener getListener() {
-        return listener;
-    }
-
     public interface OnItemClickListener {
-        void onItemClick();
+        void onItemClick(int position);
     }
 
     @NonNull
@@ -98,10 +94,11 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public void addData(Object items) {
         itemList.add(items);
-        notifyItemInserted(itemList.size());
+        notifyItemInserted(itemList.size()-1);
     }
 
-    public void delete(){
-        
+    public void delete(int position){
+        itemList.remove(position);
+        notifyItemRemoved(position);
     }
 }
